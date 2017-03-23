@@ -120,3 +120,31 @@ public extension SWColor {
 		}
 	}
 }
+
+extension SWColor {
+    /// Return a hex string for `self`.
+    public var hexString: String {
+        return cgColor.hexString
+    }
+}
+
+extension CGColor {
+    
+    /// Return a hex string for `self`.
+    // See:
+    // https://developer.apple.com/library/content/qa/qa1576/_index.html
+    // http://stackoverflow.com/questions/15887582/getting-a-hex-value-from-nscolor-in-cocoa
+    public var hexString: String {
+        let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
+        guard let rgbColor = converted(to: rgbColorSpace, intent: .defaultIntent, options: nil),
+            let rgbComponents = rgbColor.components,
+            rgbColor.numberOfComponents == 4 else {
+                return "FFFFFF"
+        }
+        let red = Int(round(rgbComponents[0] * 0xFF))
+        let green = Int(round(rgbComponents[1] * 0xFF))
+        let blue = Int(round(rgbComponents[2] * 0xFF))
+        let hexString = NSString(format: "#%02X%02X%02X", red, green, blue)
+        return hexString as String
+    }
+}
