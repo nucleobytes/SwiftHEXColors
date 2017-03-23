@@ -22,10 +22,10 @@
 
 #if os(iOS) || os(tvOS)
 	import UIKit
-	typealias SWColor = UIColor
+	public typealias SWColor = UIColor
 #else
 	import Cocoa
-	typealias SWColor = NSColor
+	public typealias SWColor = NSColor
 #endif
 
 private extension Int {
